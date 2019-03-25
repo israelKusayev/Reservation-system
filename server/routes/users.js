@@ -2,12 +2,13 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const logger = require('../utils/logger');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    throw new Error();
     let { name, email, password } = req.body;
+    console.log(req.body);
 
     // simple validation
     if (!name || !email || !password)
@@ -28,6 +29,7 @@ router.post('/', async (req, res) => {
 
     newUser = await newUser.save();
 
+    // Create token
     const token = jwt.sign(
       { _id: newUser._id, name: newUser.name },
       'myJwtSecretKey',
@@ -36,9 +38,8 @@ router.post('/', async (req, res) => {
 
     res.send({ token });
   } catch (error) {
-    winston.error('fdsfddf', error);
-    // winston.err('error', 'some error', () => console.log('error ....'));
-    // console.log(error);
+    logger.error('Post users error ', error);
+    res.status(500).end();
   }
 });
 module.exports = router;

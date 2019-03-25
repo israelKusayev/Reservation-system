@@ -8,9 +8,11 @@ import {
   FormGroup,
   Input,
   NavLink,
-  Alert
+  Alert,
+  Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { register } from '../actions/authActions';
 
 class RegisterModal extends Component {
   state = {
@@ -46,6 +48,7 @@ class RegisterModal extends Component {
     };
 
     // Attempt to register
+    this.props.register(newUser);
   };
 
   render() {
@@ -96,6 +99,9 @@ class RegisterModal extends Component {
                   className='mb-3'
                   onChange={this.onChange}
                 />
+                <div class='flex-center'>
+                  <Spinner style={{ margin: '0 auto' }} />
+                </div>
                 <Button color='dark' style={{ marginTop: '2rem' }} block>
                   הרשם
                 </Button>
@@ -107,5 +113,9 @@ class RegisterModal extends Component {
     );
   }
 }
+const mapStateToProps = state => ({});
 
-export default RegisterModal;
+export default connect(
+  mapStateToProps,
+  { register }
+)(RegisterModal);

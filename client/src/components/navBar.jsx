@@ -41,7 +41,6 @@ class NavBar extends Component {
             height='30'
             width='30'
             alt=''
-            srcset=''
           />
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
