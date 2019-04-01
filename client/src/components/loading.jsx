@@ -1,21 +1,12 @@
 import React from 'react';
 import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
-function Loading(props) {
+
+function Loading({ loading }) {
   return (
     <>
-      {props.loading ? (
-        <div
-          style={{
-            position: 'fixed',
-            height: '100vh',
-            width: '100vw',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            top: 0
-          }}
-        >
+      {loading ? (
+        <div className='loading'>
           <Spinner color='dark' />
         </div>
       ) : null}

@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-const { validatePassword } = require('../utils/hashing');
+const bcrypt = require('bcryptjs');
 const { createToken } = require('../utils/jwt.js');
 
 const router = express.Router();
@@ -18,8 +18,8 @@ router.post('/', async (req, res) => {
   if (!user) return res.status(400).send({ msg: 'User does not exists' });
 
   // Validate password
-  if (!validatePassword(password, user.password))
-    return res.status(400).send({ msg: 'Invalid password' });
+  const valid = await bcrypt.compare(password, user.password);
+  if (!valid) return res.status(400).send({ msg: 'Invalid password' });
 
   // Create token
   const token = createToken(user);

@@ -8,7 +8,8 @@ import {
   FormGroup,
   Input,
   NavLink,
-  Alert
+  Alert,
+  Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/authActions';
@@ -46,19 +47,20 @@ class LoginModal extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, email, password } = this.state;
+    const { email, password } = this.state;
 
     // Create user object
     const newUser = {
-      name,
       email,
       password
     };
 
     // Attempt to register
-    this.props.register(newUser);
+    this.props.login(newUser);
   };
   render() {
+    const { isFetching, error } = this.props;
+
     const closeBtn = (
       <button className='close float-left' onClick={this.toggle}>
         &times;
@@ -75,9 +77,6 @@ class LoginModal extends Component {
             Login with email and password
           </ModalHeader>
           <ModalBody>
-            {this.state.msg ? (
-              <Alert color='danger'>{this.state.msg}</Alert>
-            ) : null}
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Input
@@ -97,6 +96,12 @@ class LoginModal extends Component {
                   className='mb-3'
                   onChange={this.onChange}
                 />
+                {error.msg ? <Alert color='danger'>{error.msg}</Alert> : null}
+                {isFetching ? (
+                  <div className='flex-center'>
+                    <Spinner style={{ margin: '0 auto' }} />
+                  </div>
+                ) : null}
                 <Button color='dark' style={{ marginTop: '2rem' }} block>
                   Login
                 </Button>

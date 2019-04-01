@@ -6,10 +6,13 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem
+  NavItem,
+  NavLink
 } from 'reactstrap';
 import RegisterModal from './registerModal';
 import LoginModal from './loginModal';
+
+import { connect } from 'react-redux';
 
 class NavBar extends Component {
   constructor(props) {
@@ -26,6 +29,26 @@ class NavBar extends Component {
     });
   }
   render() {
+    const guestLinks = (
+      <>
+        <NavItem>
+          <RegisterModal />
+        </NavItem>
+        <NavItem>
+          <LoginModal />
+        </NavItem>
+      </>
+    );
+    const userLinks = (
+      <>
+        <NavItem>
+          <NavLink>abc</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink>efg</NavLink>
+        </NavItem>
+      </>
+    );
     return (
       <div>
         <Navbar fixed='fixed' dark color='dark' expand='md'>
@@ -45,12 +68,7 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='ml-auto' navbar>
-              <NavItem>
-                <RegisterModal />
-              </NavItem>
-              <NavItem>
-                <LoginModal />
-              </NavItem>
+              {this.props.isAuthenticated ? userLinks : guestLinks}
             </Nav>
           </Collapse>
         </Navbar>
@@ -59,4 +77,8 @@ class NavBar extends Component {
   }
 }
 
-export default withRouter(NavBar);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default withRouter(connect(mapStateToProps)(NavBar));

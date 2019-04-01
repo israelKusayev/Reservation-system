@@ -64,7 +64,7 @@ class RegisterModal extends Component {
   };
 
   render() {
-    const { isFetching } = this.props;
+    const { isFetching, error } = this.props;
 
     const closeBtn = (
       <button className='close float-left' onClick={this.toggle}>
@@ -111,9 +111,7 @@ class RegisterModal extends Component {
                   className='mb-3'
                   onChange={this.onChange}
                 />
-                {this.props.error.msg ? (
-                  <Alert color='danger'>{this.props.error.msg}</Alert>
-                ) : null}
+                {error.msg ? <Alert color='danger'>{error.msg}</Alert> : null}
                 {isFetching ? (
                   <div className='flex-center'>
                     <Spinner style={{ margin: '0 auto' }} />
