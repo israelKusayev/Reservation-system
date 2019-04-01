@@ -1,11 +1,19 @@
 const express = require('express');
 const User = require('../models/User');
 const logger = require('../utils/logger');
+const auth = require('../middlewares/auth');
 const { hashPassword } = require('../utils/hashing');
 const { createToken } = require('../utils/jwt.js');
 
 const router = express.Router();
 
+// Get user data
+router.get('/', auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  res.send(user);
+});
+
+// Register new user
 router.post('/', async (req, res) => {
   try {
     let { name, email, password } = req.body;

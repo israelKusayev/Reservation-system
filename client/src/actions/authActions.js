@@ -4,7 +4,10 @@ import {
   REGISTER_FAILED,
   REQUEST_FETCH,
   LOGIN_SUCCESS,
-  LOGIN_FAILED
+  LOGIN_FAILED,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILED,
+  LOGOUT
 } from './types';
 import { setError } from './errorActions';
 
@@ -44,7 +47,23 @@ export const login = user => dispatch => {
 };
 
 // Check token & load user
-export const loadUser = () => (dispatch, ownState) => {
+export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: REQUEST_FETCH });
-  axios.get();
+  axios
+    .get('/api/users', tokenConfig(getState().auth.token))
+    .then(res => {
+      dispatch({ type: LOAD_USER_SUCCESS, payload: res.data });
+    })
+    .catch(({ response }) => {
+      dispatch(setError(response.data.msg, response.status));
+      dispatch({ type: LOAD_USER_FAILED });
+    });
 };
+
+export const logout = () => ({ type: LOGOUT });
+
+function tokenConfig(token) {
+  if (token) {
+    return { headers: { 'x-auth-token': token } };
+  }
+}

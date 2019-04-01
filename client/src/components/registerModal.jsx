@@ -25,7 +25,6 @@ class RegisterModal extends Component {
 
   componentDidUpdate = prevProps => {
     const { isAuthenticated } = this.props;
-    debugger;
     if (this.state.modal) {
       if (isAuthenticated) {
         console.log(isAuthenticated);

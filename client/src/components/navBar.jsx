@@ -11,6 +11,7 @@ import {
 } from 'reactstrap';
 import RegisterModal from './registerModal';
 import LoginModal from './loginModal';
+import { logout } from '../actions/authActions';
 
 import { connect } from 'react-redux';
 
@@ -42,10 +43,10 @@ class NavBar extends Component {
     const userLinks = (
       <>
         <NavItem>
-          <NavLink>abc</NavLink>
+          <NavLink onClick={this.props.logout}>logout</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink>efg</NavLink>
+          <NavLink>home</NavLink>
         </NavItem>
       </>
     );
@@ -81,4 +82,9 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default withRouter(connect(mapStateToProps)(NavBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logout }
+  )(NavBar)
+);

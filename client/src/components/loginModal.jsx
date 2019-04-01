@@ -24,7 +24,6 @@ class LoginModal extends Component {
 
   componentDidUpdate = prevProps => {
     const { isAuthenticated } = this.props;
-    debugger;
     if (this.state.modal) {
       if (isAuthenticated) {
         this.toggle();
