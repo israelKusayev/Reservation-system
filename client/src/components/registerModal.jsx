@@ -13,19 +13,31 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { register } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
 
 class RegisterModal extends Component {
   state = {
     modal: false,
-    msg: null,
     name: '',
     email: '',
     password: ''
   };
 
+  componentDidUpdate = prevProps => {
+    const { isAuthenticated } = this.props;
+    debugger;
+    if (this.state.modal) {
+      if (isAuthenticated) {
+        console.log(isAuthenticated);
+
+        this.toggle();
+      }
+    }
+  };
+
   toggle = () => {
     // Clear errors
-
+    this.props.clearErrors();
     this.setState({
       modal: !this.state.modal
     });
@@ -52,32 +64,32 @@ class RegisterModal extends Component {
   };
 
   render() {
+    const { isFetching } = this.props;
+
     const closeBtn = (
       <button className='close float-left' onClick={this.toggle}>
         &times;
       </button>
     );
+
     return (
       <div>
         <NavLink onClick={this.toggle} href='#'>
-          הרשמה
+          Register
         </NavLink>
 
-        <Modal isOpen={this.state.modal} dir='rtl' toggle={this.toggle}>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader close={closeBtn} toggle={this.toggle}>
-            הרשם עם כתובת מייל חדשה
+            Please enter new email address
           </ModalHeader>
           <ModalBody>
-            {this.state.msg ? (
-              <Alert color='danger'>{this.state.msg}</Alert>
-            ) : null}
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Input
                   type='text'
                   name='name'
                   id='name'
-                  placeholder='שם'
+                  placeholder='Name'
                   className='mb-3'
                   onChange={this.onChange}
                 />
@@ -86,7 +98,7 @@ class RegisterModal extends Component {
                   type='email'
                   name='email'
                   id='email'
-                  placeholder='דוא"ל'
+                  placeholder='Email'
                   className='mb-3'
                   onChange={this.onChange}
                 />
@@ -95,15 +107,20 @@ class RegisterModal extends Component {
                   type='password'
                   name='password'
                   id='password'
-                  placeholder='סיסמה'
+                  placeholder='Password'
                   className='mb-3'
                   onChange={this.onChange}
                 />
-                <div class='flex-center'>
-                  <Spinner style={{ margin: '0 auto' }} />
-                </div>
+                {this.props.error.msg ? (
+                  <Alert color='danger'>{this.props.error.msg}</Alert>
+                ) : null}
+                {isFetching ? (
+                  <div className='flex-center'>
+                    <Spinner style={{ margin: '0 auto' }} />
+                  </div>
+                ) : null}
                 <Button color='dark' style={{ marginTop: '2rem' }} block>
-                  הרשם
+                  Register
                 </Button>
               </FormGroup>
             </Form>
@@ -113,9 +130,13 @@ class RegisterModal extends Component {
     );
   }
 }
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  isFetching: state.auth.isFetching,
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
+});
 
 export default connect(
   mapStateToProps,
-  { register }
+  { register, clearErrors }
 )(RegisterModal);

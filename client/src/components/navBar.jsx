@@ -44,7 +44,7 @@ class NavBar extends Component {
           />
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className='mr-auto' navbar>
+            <Nav className='ml-auto' navbar>
               <NavItem>
                 <RegisterModal />
               </NavItem>

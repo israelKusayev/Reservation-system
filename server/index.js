@@ -13,7 +13,8 @@ app.use('/api/users', require('./routes/users'));
 
 monggose
   .connect(
-    'mongodb+srv://israel:israel1243@cluster0-ig561.mongodb.net/test?retryWrites=true',
+    // 'mongodb+srv://israel:israel1243@cluster0-ig561.mongodb.net/test?retryWrites=true',
+    'mongodb+srv://israel:israel1243@reservation-system-ntoih.gcp.mongodb.net/ReservationDB?retryWrites=true',
     { useNewUrlParser: true, useCreateIndex: true }
   )
   .then(() => {

@@ -10,22 +10,19 @@ import Loading from './components/loading';
 
 class App extends Component {
   componentDidMount = () => {
+    // to do extract to diffrent file
     axios.defaults.baseURL = 'http://localhost:4000';
     axios.defaults.headers.post['Content-Type'] = 'application/json';
-    console.log(store.getState().auth.loading);
   };
 
   render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div className='App'>
-            <NavBar />
-            <Loading />
-            <div>
-              <MainForm />
-            </div>
-          </div>
+          <NavBar />
+          <Loading />
+          <MainForm />
+          {/* to do extract switch to anther component */}
           <Switch>
             {/* <Route path='/register' component={Register} /> */}
           </Switch>

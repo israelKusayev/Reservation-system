@@ -1,11 +1,7 @@
 body {
-  direction: rtl;
   background: linear-gradient(grey, white);
 
   background-attachment: fixed;
-}
-.modal-header .close {
-  margin: -1rem -1rem -1rem 0 !important;
 }
 
 .pointer {

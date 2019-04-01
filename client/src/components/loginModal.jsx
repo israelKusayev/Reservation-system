@@ -11,26 +11,36 @@ import {
   Alert
 } from 'reactstrap';
 import { connect } from 'react-redux';
-
+import { login } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
 class LoginModal extends Component {
   state = {
     modal: false,
     name: '',
     email: '',
-    password: '',
-    msg: null
+    password: ''
+  };
+
+  componentDidUpdate = prevProps => {
+    const { isAuthenticated } = this.props;
+    debugger;
+    if (this.state.modal) {
+      if (isAuthenticated) {
+        this.toggle();
+      }
+    }
   };
 
   toggle = () => {
     // Clear errors
-
+    this.props.clearErrors();
     this.setState({
       modal: !this.state.modal
     });
   };
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange = ({ target }) => {
+    this.setState({ [target.name]: target.value });
   };
 
   onSubmit = e => {
@@ -46,8 +56,8 @@ class LoginModal extends Component {
     };
 
     // Attempt to register
+    this.props.register(newUser);
   };
-
   render() {
     const closeBtn = (
       <button className='close float-left' onClick={this.toggle}>
@@ -57,12 +67,12 @@ class LoginModal extends Component {
     return (
       <div>
         <NavLink onClick={this.toggle} href='#'>
-          התחברות
+          Login
         </NavLink>
 
-        <Modal isOpen={this.state.modal} dir='rtl' toggle={this.toggle}>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader close={closeBtn} toggle={this.toggle}>
-            התחבר עם מייל וסיסמה
+            Login with email and password
           </ModalHeader>
           <ModalBody>
             {this.state.msg ? (
@@ -74,7 +84,7 @@ class LoginModal extends Component {
                   type='email'
                   name='email'
                   id='email'
-                  placeholder='דוא"ל'
+                  placeholder='Email'
                   className='mb-3'
                   onChange={this.onChange}
                 />
@@ -83,12 +93,12 @@ class LoginModal extends Component {
                   type='password'
                   name='password'
                   id='password'
-                  placeholder='סיסמה'
+                  placeholder='Password'
                   className='mb-3'
                   onChange={this.onChange}
                 />
                 <Button color='dark' style={{ marginTop: '2rem' }} block>
-                  הרשם
+                  Login
                 </Button>
               </FormGroup>
             </Form>
@@ -99,4 +109,15 @@ class LoginModal extends Component {
   }
 }
 
-export default LoginModal;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isFetching: state.auth.isFetching,
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { login, clearErrors }
+)(LoginModal);

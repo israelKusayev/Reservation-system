@@ -1,40 +1,31 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const logger = require('../utils/logger');
+const { hashPassword } = require('../utils/hashing');
+const { createToken } = require('../utils/jwt.js');
+
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
     let { name, email, password } = req.body;
-    console.log(req.body);
 
-    // simple validation
+    // Simple validation
     if (!name || !email || !password)
-      return res.status(400).json({ msg: 'Please enter all fields' });
+      return res.status(400).send({ msg: 'Please enter all fields' });
 
     // Check for existing user
     const user = await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: 'User already exists' });
+    if (user) return res.status(400).send({ msg: 'User already exists' });
 
     // Create salt & hash
-    const salt = await bcrypt.genSalt(10);
-    console.log('salt');
-
-    password = await bcrypt.hash(password, salt);
+    password = await hashPassword(password);
 
     let newUser = new User({ name, email, password });
-    console.log(newUser);
-
     newUser = await newUser.save();
 
     // Create token
-    const token = jwt.sign(
-      { _id: newUser._id, name: newUser.name },
-      'myJwtSecretKey',
-      { expiresIn: 3600 }
-    );
+    const token = createToken(newUser);
 
     res.send({ token });
   } catch (error) {

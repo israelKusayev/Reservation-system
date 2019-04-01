@@ -1,3 +1,7 @@
+export const REQUEST_FETCH = 'REQUEST_FETCH';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILED = 'REGISTER_FAILED';
-export const REQUEST_FETCH = 'REQUEST_FETCH';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const SET_ERRORS = 'SET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';

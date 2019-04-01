@@ -1,12 +1,17 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAILED,
-  REQUEST_FETCH
+  REQUEST_FETCH,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED
 } from '../actions/types';
 
+const tokenKey = 'token';
+
 const initialState = {
-  token: {},
-  loading: false,
+  token: localStorage.getItem(tokenKey),
+  isFetching: false,
+  isAuthenticated: false,
   user: {}
 };
 
@@ -15,19 +20,25 @@ export default function(state = initialState, action) {
     case REQUEST_FETCH:
       return {
         ...state,
-        loading: true
+        isFetching: true
       };
     case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
+      localStorage.setItem(tokenKey, action.payload.token);
       return {
         ...state,
-        token: action.payload,
-        loading: false
+        isAuthenticated: true,
+        isFetching: false
       };
 
     case REGISTER_FAILED:
+    case LOGIN_FAILED:
+      localStorage.removeItem(tokenKey);
+
       return {
         ...state,
-        loading: false
+        isAuthenticated: false,
+        isFetching: false
       };
 
     default:
