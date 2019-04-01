@@ -2,25 +2,28 @@ const express = require('express');
 const monggose = require('mongoose');
 const cors = require('cors');
 const logger = require('./utils/logger');
+const dbConfig = require('./config/db.json');
+
 const app = express();
 
 // middlewares
 app.use(cors());
 app.use(express.json());
 
-// routes
+// Use Routes
 app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/auth'));
 
+// Connect to Mongo
 monggose
-  .connect(
-    // 'mongodb+srv://israel:israel1243@cluster0-ig561.mongodb.net/test?retryWrites=true',
-    'mongodb+srv://israel:israel1243@reservation-system-ntoih.gcp.mongodb.net/ReservationDB?retryWrites=true',
-    { useNewUrlParser: true, useCreateIndex: true }
-  )
+  .connect(dbConfig.connectionString, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  })
   .then(() => {
     console.log('MongoDB Connected...');
   })
-  .catch(err => console.log('ERROR', err));
+  .catch(err => logger.error('Failed to connect to MongoDB', err));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log('listening on http://localhost:' + port));

@@ -1,0 +1,3 @@
+{
+  "connectionString": "mongodb+srv://israel:israel1243@reservation-system-ntoih.gcp.mongodb.net/ReservationDB?retryWrites=true"
+}
