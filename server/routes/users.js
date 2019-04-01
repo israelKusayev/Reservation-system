@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     // Create token
     const token = createToken(newUser);
 
-    res.send({ token });
+    res.send({ token, user: newUser });
   } catch (error) {
     logger.error('Post users error ', error);
     res.status(500).end();

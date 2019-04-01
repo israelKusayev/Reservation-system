@@ -24,6 +24,6 @@ router.post('/', async (req, res) => {
   // Create token
   const token = createToken(user);
 
-  return res.status(200).send({ token });
+  return res.status(200).send({ token, user });
 });
 module.exports = router;

@@ -39,7 +39,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        isFetching: false
+        isFetching: false,
+        user: action.payload.user
       };
 
     case REGISTER_FAILED:

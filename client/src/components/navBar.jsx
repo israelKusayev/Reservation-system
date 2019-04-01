@@ -7,7 +7,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap';
 import RegisterModal from './registerModal';
 import LoginModal from './loginModal';
@@ -43,11 +47,20 @@ class NavBar extends Component {
     const userLinks = (
       <>
         <NavItem>
-          <NavLink onClick={this.props.logout}>logout</NavLink>
-        </NavItem>
-        <NavItem>
           <NavLink>home</NavLink>
         </NavItem>
+
+        <UncontrolledDropdown nav inNavbar className='ml-2'>
+          <DropdownToggle nav caret>
+            {this.props.name}
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem>Option 1</DropdownItem>
+            <DropdownItem>Option 2</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem onClick={this.props.logout}>Logout</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
       </>
     );
     return (
@@ -79,7 +92,8 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  name: state.auth.user ? state.auth.user.name : ''
 });
 
 export default withRouter(
