@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from 'reactstrap';
-import RegisterModal from './registerModal';
-import LoginModal from './loginModal';
-import { logout } from '../actions/authActions';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from 'reactstrap';
 
 import { connect } from 'react-redux';
+import { logout } from '../../actions/authActions';
+
+import UserNavbar from './userNavbar';
+import GuestNavbar from './guestNavbar';
 
 class NavBar extends Component {
   constructor(props) {
@@ -34,35 +23,7 @@ class NavBar extends Component {
     });
   }
   render() {
-    const guestLinks = (
-      <>
-        <NavItem>
-          <RegisterModal />
-        </NavItem>
-        <NavItem>
-          <LoginModal />
-        </NavItem>
-      </>
-    );
-    const userLinks = (
-      <>
-        <NavItem>
-          <NavLink>home</NavLink>
-        </NavItem>
-
-        <UncontrolledDropdown nav inNavbar className='ml-2'>
-          <DropdownToggle nav caret>
-            {this.props.name}
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem>Option 1</DropdownItem>
-            <DropdownItem>Option 2</DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem onClick={this.props.logout}>Logout</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </>
-    );
+    const { logout, name, isAuthenticated } = this.props;
     return (
       <div>
         <Navbar fixed='fixed' dark color='dark' expand='md'>
@@ -82,7 +43,11 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='ml-auto' navbar>
-              {this.props.isAuthenticated ? userLinks : guestLinks}
+              {isAuthenticated ? (
+                <UserNavbar logout={logout} name={name} />
+              ) : (
+                <GuestNavbar />
+              )}
             </Nav>
           </Collapse>
         </Navbar>

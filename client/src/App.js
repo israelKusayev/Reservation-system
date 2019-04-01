@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import NavBar from './components/navBar';
+import NavBar from './components/navbar/mainNavbar';
 import MainForm from './components/mainForm';
 import Loading from './components/loading';
 import './utils/axiosSettings';
