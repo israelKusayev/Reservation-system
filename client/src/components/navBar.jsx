@@ -60,7 +60,7 @@ class NavBar extends Component {
             FindRest
           </NavbarBrand>
           <img
-            src='https://upload.wikimedia.org/wikipedia/commons/1/19/Food_Barnstar_Hires.png'
+            src='https://banner2.kisspng.com/20180413/oyq/kisspng-restaurant-logo-lunch-5ad1606381cc10.5146934915236711395317.jpg'
             height='30'
             width='30'
             alt=''

@@ -8,6 +8,7 @@ import {
 } from './types';
 import { setError } from './errorActions';
 
+// Register user
 export const register = user => dispatch => {
   dispatch({ type: REQUEST_FETCH });
 
@@ -27,6 +28,7 @@ export const register = user => dispatch => {
     });
 };
 
+// Login user
 export const login = user => dispatch => {
   dispatch({ type: REQUEST_FETCH });
 
@@ -39,4 +41,10 @@ export const login = user => dispatch => {
       dispatch(setError(response.data.msg, response.status));
       dispatch({ type: LOGIN_FAILED });
     });
+};
+
+// Check token & load user
+export const loadUser = () => (dispatch, ownState) => {
+  dispatch({ type: REQUEST_FETCH });
+  axios.get();
 };

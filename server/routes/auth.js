@@ -5,6 +5,8 @@ const { createToken } = require('../utils/jwt.js');
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {});
+
 // login
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
