@@ -26,7 +26,12 @@ class NavBar extends Component {
     const { logout, name, isAuthenticated } = this.props;
     return (
       <div>
-        <Navbar fixed='fixed' dark color='dark' expand='md'>
+        <Navbar
+          fixed='fixed'
+          dark
+          style={{ backgroundColor: '#0c1a20' }}
+          expand='md'
+        >
           <NavbarBrand
             color='white'
             className='ml-1 text-light pointer'
