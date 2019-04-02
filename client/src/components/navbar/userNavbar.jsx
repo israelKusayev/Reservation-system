@@ -18,6 +18,12 @@ export default function UserNavbar({ name, logout }) {
         </NavLink>
       </NavItem>
 
+      <NavItem>
+        <NavLink tag={RRNavLink} to='/add-restaurant'>
+          Add restaurant
+        </NavLink>
+      </NavItem>
+
       <UncontrolledDropdown nav inNavbar className='ml-2'>
         <DropdownToggle nav caret>
           {name}

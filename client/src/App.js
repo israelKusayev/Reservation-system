@@ -6,11 +6,10 @@ import MainForm from './components/mainForm';
 import Loading from './components/loading';
 import './utils/axiosSettings';
 import { loadUser } from './actions/authActions';
+import AddRestaurant from './components/addRestaurant';
 
 class App extends Component {
   componentDidMount = () => {
-    console.log(this.props.store);
-
     this.props.store.dispatch(loadUser());
   };
 
@@ -20,7 +19,10 @@ class App extends Component {
         <NavBar />
         <Loading />
 
-        <Switch>{<Route path='/' component={MainForm} />}</Switch>
+        <Switch>
+          <Route path='/add-restaurant' component={AddRestaurant} />
+          <Route path='/' component={MainForm} />
+        </Switch>
       </>
     );
   }

@@ -1,7 +1,9 @@
 @import './loading.css';
+@import './addRestaurant.css';
 
 body {
   font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 19px;
   background: #0c1a20; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to top,
@@ -17,6 +19,7 @@ body {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   background-attachment: fixed;
+  color: #fffdd0;
 }
 
 .pointer {
@@ -30,4 +33,8 @@ body {
 
 a.nav-link {
   cursor: pointer;
+}
+
+.row {
+  margin: 0 0 10px 0 !important;
 }
