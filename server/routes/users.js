@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-const logger = require('../utils/logger');
+const winston = require('winston');
 const auth = require('../middlewares/auth');
 const { hashPassword } = require('../utils/hashing');
 const { createToken } = require('../utils/jwt.js');
@@ -15,30 +15,27 @@ router.get('/', auth, async (req, res) => {
 
 // Register new user
 router.post('/', async (req, res) => {
-  try {
-    let { name, email, password } = req.body;
+  let { name, email, password } = req.body;
 
-    // Simple validation
-    if (!name || !email || !password)
-      return res.status(400).send({ msg: 'Please enter all fields' });
+  // Simple validation
+  if (!name || !email || !password)
+    return res.status(400).send({ msg: 'Please enter all fields' });
 
-    // Check for existing user
-    const user = await User.findOne({ email });
-    if (user) return res.status(400).send({ msg: 'User already exists' });
+  // Check for existing user
+  const user = await User.findOne({ email });
+  if (user) return res.status(400).send({ msg: 'User already exists' });
 
-    // Create salt & hash
-    password = await hashPassword(password);
+  // Create salt & hash
+  password = await hashPassword(password);
 
-    let newUser = new User({ name, email, password });
-    newUser = await newUser.save();
+  let newUser = new User({ name, email, password });
+  newUser = await newUser.save();
 
-    // Create token
-    const token = createToken(newUser);
+  // Create token
+  const token = createToken(newUser);
 
-    res.send({ token, user: newUser });
-  } catch (error) {
-    logger.error('Post users error ', error);
-    res.status(500).end();
-  }
+  res.send({ token, user: newUser });
+
+  // logger.error('Post users error ', error);
 });
 module.exports = router;

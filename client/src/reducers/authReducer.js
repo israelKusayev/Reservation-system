@@ -13,34 +13,31 @@ const tokenKey = 'token';
 
 const initialState = {
   token: localStorage.getItem(tokenKey),
-  isFetching: false,
+
   isAuthenticated: false,
   user: {}
 };
 
-export default function(state = initialState, action) {
-  switch (action.type) {
+export default (state = initialState, { type, payload }) => {
+  switch (type) {
     case REQUEST_FETCH:
       return {
-        ...state,
-        isFetching: true
+        ...state
       };
     case LOAD_USER_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
-        isFetching: false,
-        user: action.payload
+        user: payload
       };
 
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem(tokenKey, action.payload.token);
+      localStorage.setItem(tokenKey, payload.token);
       return {
         ...state,
         isAuthenticated: true,
-        isFetching: false,
-        user: action.payload.user
+        user: payload.user
       };
 
     case REGISTER_FAILED:
@@ -51,11 +48,10 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: false,
-        isFetching: false,
         user: {}
       };
 
     default:
       return state;
   }
-}
+};

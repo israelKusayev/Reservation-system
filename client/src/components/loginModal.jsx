@@ -115,7 +115,7 @@ class LoginModal extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isFetching: state.auth.isFetching,
+    isFetching: state.loading,
     isAuthenticated: state.auth.isAuthenticated,
     error: state.error
   };

@@ -3,7 +3,8 @@ import { Button, Form } from 'reactstrap';
 import { schema } from '../formValidations/addRestaurantValidation';
 import AddtableForm from './addtableForm';
 import BaseForm from './baseForm';
-
+import { connect } from 'react-redux';
+import { addRestaurant } from '../actions/restaurantAction';
 class AddRestaurant extends BaseForm {
   state = {
     data: {
@@ -14,7 +15,7 @@ class AddRestaurant extends BaseForm {
       restaurantPhone: '',
       moreDetails: '',
       reservationHours: '',
-      kosher: true,
+      kosher: false,
       takeAway: false,
       parking: false,
       delivery: false,
@@ -38,7 +39,9 @@ class AddRestaurant extends BaseForm {
     this.setState({ data: { ...this.state.data, tables } });
   };
 
-  doSubmit = () => {};
+  doSubmit = () => {
+    this.props.addRestaurant(this.state.data);
+  };
 
   render() {
     return (
@@ -89,4 +92,7 @@ class AddRestaurant extends BaseForm {
     );
   }
 }
-export default AddRestaurant;
+export default connect(
+  null,
+  { addRestaurant }
+)(AddRestaurant);

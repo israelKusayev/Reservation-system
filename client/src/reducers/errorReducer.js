@@ -6,12 +6,12 @@ const initialState = {
   id: null
 };
 
-export default function(state = initialState, action) {
-  switch (action.type) {
+export default (state = initialState, { type, payload }) => {
+  switch (type) {
     case SET_ERRORS:
       return {
         ...state,
-        ...action.payload
+        ...payload
       };
     case CLEAR_ERRORS: {
       return {
@@ -23,4 +23,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

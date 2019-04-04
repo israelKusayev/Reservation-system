@@ -128,7 +128,7 @@ class RegisterModal extends Component {
   }
 }
 const mapStateToProps = state => ({
-  isFetching: state.auth.isFetching,
+  isFetching: state.loading,
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error
 });

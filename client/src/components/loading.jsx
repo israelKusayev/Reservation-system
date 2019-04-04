@@ -3,11 +3,13 @@ import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 
 function Loading({ loading }) {
+  console.log(loading);
+
   return (
     <>
       {loading ? (
         <div className='loading'>
-          <Spinner color='dark' />
+          <Spinner style={{ width: '5rem', height: '5rem' }} color='danger' />
         </div>
       ) : null}
     </>
@@ -15,7 +17,7 @@ function Loading({ loading }) {
 }
 
 const mapStateToProps = state => {
-  return { loading: state.auth.isFetching };
+  return { loading: state.loading };
 };
 
 export default connect(mapStateToProps)(Loading);
