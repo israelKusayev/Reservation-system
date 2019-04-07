@@ -3,7 +3,14 @@ const winston = require('winston');
 
 module.exports = () => {
   winston.add(new winston.transports.File({ filename: 'logs/logfile.log' }));
-  winston.add(new winston.transports.Console());
+  winston.add(
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      )
+    })
+  );
 
   winston.exceptions.handle([
     new winston.transports.File({ filename: 'logs/uncaughtExceptions.log' }),

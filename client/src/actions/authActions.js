@@ -62,7 +62,7 @@ export const loadUser = () => (dispatch, getState) => {
 
 export const logout = () => ({ type: LOGOUT });
 
-function tokenConfig(token) {
+export function tokenConfig(token) {
   if (token) {
     return { headers: { 'x-auth-token': token } };
   }

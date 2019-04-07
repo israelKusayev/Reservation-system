@@ -3,8 +3,6 @@ import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 
 function Loading({ loading }) {
-  console.log(loading);
-
   return (
     <>
       {loading ? (

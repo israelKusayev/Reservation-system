@@ -2,7 +2,7 @@
 @import './addRestaurant.css';
 
 body {
-  font-family: 'ZCOOL XiaoWei', serif;
+  font-family: 'Roboto Slab', serif;
   font-size: 19px;
   background: #0c1a20; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -37,4 +37,8 @@ a.nav-link {
 
 .row {
   margin: 0 0 10px 0 !important;
+}
+
+.modal-header {
+  color: black;
 }
