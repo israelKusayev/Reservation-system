@@ -77,16 +77,21 @@ function validateRestaurant(restaurant) {
           .keys({
             anountOfDiners: joi
               .number()
+              .min(0)
+              .max(50)
               .required()
               .label('Amount of diners'),
             tableCount: joi
               .number()
+              .min(0)
+              .max(50)
               .required()
               .label('Tables count')
           })
           .required()
       )
       .required()
+      .label('Tables')
   };
 
   return joi.validate(restaurant, schema);

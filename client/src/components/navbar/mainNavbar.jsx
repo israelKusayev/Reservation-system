@@ -22,8 +22,13 @@ class NavBar extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  logout = () => {
+    this.props.logout();
+    this.props.history.push('/home');
+  };
   render() {
-    const { logout, name, isAuthenticated } = this.props;
+    const { name, isAuthenticated } = this.props;
     return (
       <div>
         <Navbar
@@ -49,7 +54,7 @@ class NavBar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='ml-auto' navbar>
               {isAuthenticated ? (
-                <UserNavbar logout={logout} name={name} />
+                <UserNavbar logout={this.logout} name={name} />
               ) : (
                 <GuestNavbar />
               )}

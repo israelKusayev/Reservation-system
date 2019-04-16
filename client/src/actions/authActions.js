@@ -49,6 +49,7 @@ export const login = user => dispatch => {
 // Check token & load user
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: REQUEST_FETCH });
+
   axios
     .get('/api/users', tokenConfig(getState().auth.token))
     .then(res => {

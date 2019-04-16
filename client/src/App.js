@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
-
+import { Switch, Route, Redirect } from 'react-router-dom';
+import ReduxToastr from 'react-redux-toastr';
 import NavBar from './components/navbar/mainNavbar';
-import MainForm from './components/mainForm';
+import Home from './components/home';
 import Loading from './components/loading';
 import './utils/axiosSettings';
 import { loadUser } from './actions/authActions';
 import AddRestaurant from './components/addRestaurant';
+import NotFound from './components/notFound';
+import OrderTable from './components/orderTable';
 
 class App extends Component {
   componentDidMount = () => {
@@ -21,8 +23,14 @@ class App extends Component {
 
         <Switch>
           <Route path='/add-restaurant' component={AddRestaurant} />
-          <Route path='/' component={MainForm} />
+          <Route path='/home' component={Home} />
+          <Route path='/order-table' component={OrderTable} />
+          <Route path='/not-found' component={NotFound} />
+
+          <Redirect path='/' exact={true} component={Home} />
+          <Redirect to='/not-found' />
         </Switch>
+        <ReduxToastr />
       </>
     );
   }

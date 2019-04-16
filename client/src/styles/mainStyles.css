@@ -42,3 +42,7 @@ a.nav-link {
 .modal-header {
   color: black;
 }
+
+.bold {
+  font-weight: bold;
+}
